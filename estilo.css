@@ -25,6 +25,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    background: #000 url('https://media.tenor.com/zWxb_StVG1MAAAAj/flowers-petals.gif') center center / cover no-repeat;
   }
   
   .logo-container img {
@@ -54,7 +55,7 @@ body {
   .nav-links a:hover {
     color: #ff3333;
   }
-  
+
   .banner {
     height: 60vh;
     background: #000 url('https://i.pinimg.com/originals/95/ef/b8/95efb8425d270933e5e890b33ab5ef70.gif') center center / cover no-repeat;
@@ -76,7 +77,9 @@ body {
     align-items: center;
     gap: 40px;
     font-size: 20px;
+    background: #000 url('https://i.gifer.com/ZOHV.gif') center center / cover no-repeat;
   }
+  
   
   .text-block {
     max-width: 700px;
