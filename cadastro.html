@@ -185,14 +185,16 @@
                 validacao = false;
             }
 
-            if (validacao) {
-                alert("Usuário cadastrado com sucesso!");
-                window.location.href = "login.html";
-            }
             if (senha !== confirmarSenhaInput.value) {
             alert("As senhas não coincidem");
             validacao = false;
 }
+
+            if (validacao) {
+                alert("Usuário cadastrado com sucesso!");
+                window.location.href = "login.html";
+            }
+            
         }
     </script>
 </body>
