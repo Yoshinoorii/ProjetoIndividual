@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulador - JDM</title>
+  <link rel="stylesheet" href="simulador.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo-container">
+      <img src="https://flagcdn.com/w40/jp.png" alt="Japão" />
+      <img src="https://flagcdn.com/w40/br.png" alt="Brasil" />
+      <div class="logo">JDM</div>
+    </div>
+    <nav class="nav-links">
+      <a href="jdm.html">HOME</a>
+      <a href="#quiz">QUIZ</a>
+      <a href="cadastro.html">LOGIN</a>
+      <a href="simulador.html">IMPORTAR</a>
+    </nav>
+  </header>
+
+  <main class="login-container">
+    <section class="login-box">
+      <h2>Simulador de Importação</h2>
+
+      <div class="input-group">
+        <label for="carroInput">Carro (Marca, Modelo, Ano)</label>
+        <select id="carroInput">
+          <option value="">-- Selecione um carro --</option>
+          <option value="Nissan Skyline GT-R 1990">Nissan Skyline GT-R 1990</option>
+          <option value="Toyota Supra MK4 1995">Toyota Supra MK4 1995</option>
+          <option value="Mazda RX-7 1998">Mazda RX-7 1998</option>
+          <option value="Honda Civic Type R 1999">Honda Civic Type R 1999</option>
+          <option value="Subaru Impreza WRX STI 2002">Subaru Impreza WRX STI 2002</option>
+          <option value="Nissan Silvia S14 1994">Nissan Silvia S14 1994</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="portoInput">Porto</label>
+        <select id="portoInput">
+          <option value="">-- Selecione o Porto --</option>
+          <option value="Santos">Santos (SP)</option>
+          <option value="RioDeJaneiro">Rio de Janeiro (RJ)</option>
+          <option value="Paranagua">Paranaguá (PR)</option>
+          <option value="Vitoria">Vitória (ES)</option>
+          <option value="Recife">Recife (PE)</option>
+        </select>
+      </div>
+
+      <button onclick="simular()">Simular Importação</button>
+      <div id="resultadoSimulacao" style="margin-top: 20px;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Erick Yoshinori - Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    //valores do carro
+    var nissanSkyline1990 = 75000;
+    var toyotaSupra1995 = 68000;
+    var mazdaRX71998 = 60000;
+    var hondaCivic1999 = 40000;
+    var subaruImpreza2002 = 45000;
+    var nissanSilvia1994 = 51000;
+
+    //impostos
+    var impostoSantos = 1.35;
+    var impostoRioDeJaneiro = 1.3;
+    var impostoParanagua = 1.4;
+    var impostoVitoria = 1.33;
+    var impostoRecife = 1.45;
+
+    function simular() {
+      var carro = carroInput.value;
+      var porto = portoInput.value;
+
+      // se o usuário não selecionar um carro ou porto
+      if (carro == "" || porto == "") {
+        resultadoSimulacao.innerHTML = "<span style='color: red;'>Por favor, preencha todos os campos corretamente.</span>";
+        return;
+      }
+
+      // var para o valor do carro e imposto
+      var valor = 0;
+      var imposto = 0;
+
+      // atribuindo valor de carro com base na escolha
+      if (carro === "Nissan Skyline GT-R 1990") valor = nissanSkyline1990;
+      else if (carro === "Toyota Supra MK4 1995") valor = toyotaSupra1995;
+      else if (carro === "Mazda RX-7 1998") valor = mazdaRX71998;
+      else if (carro === "Honda Civic Type R 1999") valor = hondaCivic1999;
+      else if (carro === "Subaru Impreza WRX STI 2002") valor = subaruImpreza2002;
+      else if (carro === "Nissan Silvia S14 1994") valor = nissanSilvia1994;
+
+      // atribuindo imposto com base no porto
+      if (porto === "Santos") imposto = impostoSantos;
+      else if (porto === "RioDeJaneiro") imposto = impostoRioDeJaneiro;
+      else if (porto === "Paranagua") imposto = impostoParanagua;
+      else if (porto === "Vitoria") imposto = impostoVitoria;
+      else if (porto === "Recife") imposto = impostoRecife;
+
+      // valores da simulação
+      var impostoTotal = valor * imposto;
+      var frete = 10000;
+      var total = valor + impostoTotal + frete;
+      var totalReais = total * 5;
+
+      // resultado da simulação
+      resultadoSimulacao.innerHTML =
+      "<div style='color: black;'>" +
+      "<p><strong>Carro:</strong> " + carro + "</p>" +
+      "<p><strong>Valor de Mercado:</strong> $" + valor.toFixed(2) + "</p>" +
+      "<p><strong>Impostos Estimados:</strong> $" + impostoTotal.toFixed(2) + "</p>" +
+      "<p><strong>Frete:</strong> $" + frete.toFixed(2) + "</p>" +
+      "<hr>" +
+      "<p><strong>Total Estimado convertido para Real:</strong> <span style='color: green;'>R$" + totalReais.toFixed(2) + "</span></p>" +
+      "</div>";
+    }
+  </script>
+</body>
+</html>
