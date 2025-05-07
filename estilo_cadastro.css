@@ -68,10 +68,10 @@ body {
 
 /* Caixa do formulário */
 .login-box {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 40px 60px;
+  background: #2c2c2c;
+  padding: 10px 80px;
   border-radius: 12px;
-  max-width: 400px;
+  max-width: 350px;
   width: 100%;
   text-align: center;
   box-shadow: 0 0 20px rgb(255, 0, 0);
@@ -81,7 +81,7 @@ body {
 /* Título */
 .login-box h2 {
   margin-bottom: 25px;
-  color: #111;
+  color: #ffff;
 }
 
 /* Grupo de input */
@@ -94,11 +94,11 @@ body {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
-  color: #333;
+  color: #ffff;
 }
 
 .input-group input {
-  width: 100%;
+  width: 94%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -138,7 +138,7 @@ button:hover {
 /* Link para cadastro */
 .signup-text {
   margin-top: 20px;
-  color: #333;
+  color: #fff;
   font-size: 16px;
 }
 

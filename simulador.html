@@ -85,6 +85,11 @@
         return;
       }
 
+      if (carro == "Subaru Impreza WRX STI 2002" || carro == "Honda Civic Type R 1999" || carro == "Mazda RX-7 1998") {
+        resultadoSimulacao.innerHTML = "<span style='color: red;'>Impossível Importar, veículo ainda não tem mais que 30 Anos.</span>";
+        return;
+      }
+
       // var para o valor do carro e imposto
       var valor = 0;
       var imposto = 0;
@@ -112,13 +117,12 @@
 
       // resultado da simulação
       resultadoSimulacao.innerHTML =
-      "<div style='color: black;'>" +
       "<p><strong>Carro:</strong> " + carro + "</p>" +
       "<p><strong>Valor de Mercado:</strong> $" + valor.toFixed(2) + "</p>" +
       "<p><strong>Impostos Estimados:</strong> $" + impostoTotal.toFixed(2) + "</p>" +
       "<p><strong>Frete:</strong> $" + frete.toFixed(2) + "</p>" +
       "<hr>" +
-      "<p><strong>Total Estimado convertido para Real:</strong> <span style='color: green;'>R$" + totalReais.toFixed(2) + "</span></p>" +
+      "<p><strong>Total Estimado convertido para Real:</strong> <span style='color: #26ff00;'>R$" + totalReais.toFixed(2) + "</span></p>" +
       "</div>";
     }
   </script>
