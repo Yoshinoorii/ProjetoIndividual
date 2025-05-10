@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz JDM</title>
+  <link rel="stylesheet" href="estiloQuiz.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo-container">
+      <img src="https://flagcdn.com/w40/jp.png" alt="Japão" />
+      <img src="https://flagcdn.com/w40/br.png" alt="Brasil" />
+      <div class="logo">JDM</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">HOME</a>
+      <a href="quiz.html">QUIZ</a>
+      <a href="cadastro.html">LOGIN</a>
+      <a href="simulador.html">IMPORTAR</a>
+    </nav>
+  </header>
+
+  <main class="login-container">
+    <section class="login-box">
+      <h2>Descubra seu JDM dos sonhos</h2>
+
+      <div id="quiz-pergunta" class="quiz-questao"></div>
+      <div id="quiz-respostas"></div>
+      <div id="quiz-resultado" style="margin-top: 20px;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Erick Yoshinori - Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const perguntas = [
+      {
+        texto: "Qual marca você prefere?",
+        opcoes: [
+          { texto: "Toyota", carro: "Toyota Supra MKIV" },
+          { texto: "Nissan", carro: ["Nissan Skyline R33", "Nissan Silvia S14"]},
+          { texto: "Mazda", carro: "Mazda RX7" },
+          { texto: "Mitsubishi", carro: "Mitsubishi Lancer IX" }
+        ]
+      },
+      {
+        texto: "Qual cor você prefere?",
+        opcoes: [
+          { texto: "Vermelho", carro: ["Mazda RX7", "Mitsubishi Lancer IX"] },
+          { texto: "Branco Gelo", carro: "Toyota Supra MKIV" },
+          { texto: "Preto", carro: "Nissan Silvia S14" },
+          { texto: "Azul", carro: "Nissan Skyline R33" }
+        ]
+      },
+      {
+        texto: "Qual o seu estilo?",
+        opcoes: [
+          { texto: "Drift", carro: ["Nissan Silvia S14", "Mitsubishi Lancer IX"] },
+          { texto: "Velocidade", carro: "Nissan Skyline R33" },
+          { texto: "Estilo", carro: ["Toyota Supra MKIV", "Mazda RX7"] }
+        ]
+      },
+      {
+        texto: "Num evento de carros, você escolhe o carro:",
+        opcoes: [
+        { texto: "Barulhento e rápido", carro: ["Mitsubishi Lancer IX", "Nissan Skyline R33"] },
+        { texto: "Motor exposto", carro: ["Mitsubishi Lancer IX", "Nissan Skyline R33"] },
+        { texto: "Mais bonito", carro: [, "Toyota Supra MKIV", "Nissan Silvia S14"] }
+    ]
+    },
+      {
+        texto: "Se você pudesse:",
+        opcoes: [
+          { texto: "Acelerar numa reta utilizando 100% do carro", carro: "Nissan Skyline R33" },
+          { texto: "Descer uma montanha no drift", carro: ["Nissan Silvia S14", "Mitsubishi Lancer IX"] },
+          { texto: "Exibir meu carro num evento à noite", carro: ["Toyota Supra MKIV", "Mazda RX7"] }
+        ]
+      },
+    ];
+    
+
+    const imagensCarros = {
+      "Toyota Supra MKIV": "https://static0.carbuzzimages.com/wordpress/wp-content/uploads/2024/11/trd-3000gt-the-ultra-rare-factory-built-toyota-that-you-probably-never-knew-existed_4.jpg",
+      "Nissan Skyline R33": "https://media.whichcar.com.au/uploads/2025/04/EDewar-241010-Nissan-Skyline-R33-GTR-V-Spec-1643-e1744246469945.jpg",
+      "Nissan Silvia S14": "https://thrashgaragenz.com/cdn/shop/files/image_2024-06-04_183309345_928x700.png?v=1717482792",
+      "Mitsubishi Lancer IX": "https://i.ytimg.com/vi/s7WxOvSPPpM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCoZmP8fa5cTK4vXJiGX3jw9FB5kQ",
+      "Mazda RX7": "https://w0.peakpx.com/wallpaper/3/541/HD-wallpaper-mazda-rx-7-mazda-car-red-headlights.jpg"
+    };
+    let contagem = {};
+    let perguntaAtual = 0;
+
+    function mostrarProximaPergunta() {
+      const divPergunta = document.getElementById("quiz-pergunta");
+      const divRespostas = document.getElementById("quiz-respostas");
+      const resultado = document.getElementById("quiz-resultado");
+
+      divPergunta.innerHTML = "";
+      divRespostas.innerHTML = "";
+      resultado.innerHTML = "";
+
+      if (perguntaAtual < perguntas.length) {
+        const pergunta = perguntas[perguntaAtual];
+        divPergunta.innerText = pergunta.texto;
+
+        pergunta.opcoes.forEach(opcao => {
+          const botao = document.createElement("button");
+          botao.className = "botao-resposta";
+          botao.innerText = opcao.texto;
+          botao.onclick = function () {
+            const carro = opcao.carro;
+            contagem[carro] = (contagem[carro] || 0) + 1;
+            perguntaAtual++;
+            mostrarProximaPergunta();
+          };
+          divRespostas.appendChild(botao);
+        });
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function mostrarResultado() {
+      const resultado = document.getElementById("quiz-resultado");
+      let maisEscolhido = "";
+      let maiorPontos = 0;
+
+      for (let carro in contagem) {
+        if (contagem[carro] > maiorPontos) {
+          maiorPontos = contagem[carro];
+          maisEscolhido = carro;
+        }
+      }
+
+      resultado.innerHTML = `
+        <h3>Seu JDM dos sonhos é:</h3>
+        <p><strong>${maisEscolhido}</strong></p>
+        <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
+      `;
+    }
+
+    mostrarProximaPergunta();
+  </script>
+</body>
+</html>
