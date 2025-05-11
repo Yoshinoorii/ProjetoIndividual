@@ -16,7 +16,7 @@
     <nav class="nav-links">
       <a href="index.html">HOME</a>
       <a href="quiz.html">QUIZ</a>
-      <a href="cadastro.html">LOGIN</a>
+      <a href="login.html">LOGIN</a>
       <a href="simulador.html">IMPORTAR</a>
     </nav>
   </header>
@@ -49,45 +49,59 @@
       {
         texto: "Qual cor você prefere?",
         opcoes: [
-          { texto: "Vermelho", carro: ["Mazda RX7", "Mitsubishi Lancer IX"] },
-          { texto: "Branco Gelo", carro: "Toyota Supra MKIV" },
+          { texto: "Vermelho", carro: "Mazda RX7" },
+          { texto: "Branco", carro: "Toyota Supra MKIV" },
           { texto: "Preto", carro: "Nissan Silvia S14" },
-          { texto: "Azul", carro: "Nissan Skyline R33" }
+          { texto: "Azul", carro: "Nissan Skyline R33" },
+          { texto: "Amarelo", carro: "Mitsubishi Lancer IX" }
         ]
       },
       {
         texto: "Qual o seu estilo?",
         opcoes: [
-          { texto: "Drift", carro: ["Nissan Silvia S14", "Mitsubishi Lancer IX"] },
+          { texto: "Drift", carro: "Nissan Silvia S14" },
           { texto: "Velocidade", carro: "Nissan Skyline R33" },
-          { texto: "Estilo", carro: ["Toyota Supra MKIV", "Mazda RX7"] }
+          { texto: "Estilo", carro: ["Toyota Supra MKIV", "Mazda RX7"] },
+          { texto: "Rally", carro: "Mitsubishi Lancer IX" }
         ]
       },
       {
         texto: "Num evento de carros, você escolhe o carro:",
         opcoes: [
-        { texto: "Barulhento e rápido", carro: ["Mitsubishi Lancer IX", "Nissan Skyline R33"] },
-        { texto: "Motor exposto", carro: ["Mitsubishi Lancer IX", "Nissan Skyline R33"] },
-        { texto: "Mais bonito", carro: [, "Toyota Supra MKIV", "Nissan Silvia S14"] }
+        { texto: "O Barulhento e rápido", carro: ["Mitsubishi Lancer IX", "Nissan Skyline R33"] },
+        { texto: "De capô aberto, para ver oque tem dentro", carro: "Mazda RX7" },
+        { texto: "O Mais bonito e atrativo", carro: ["Toyota Supra MKIV", "Nissan Silvia S14"] }
     ]
     },
       {
         texto: "Se você pudesse:",
         opcoes: [
           { texto: "Acelerar numa reta utilizando 100% do carro", carro: "Nissan Skyline R33" },
-          { texto: "Descer uma montanha no drift", carro: ["Nissan Silvia S14", "Mitsubishi Lancer IX"] },
-          { texto: "Exibir meu carro num evento à noite", carro: ["Toyota Supra MKIV", "Mazda RX7"] }
+          { texto: "Descer uma montanha no drift", carro: "Nissan Silvia S14"},
+          { texto: "Exibir meu carro num evento à noite", carro: "Toyota Supra MKIV" },
+          { texto: "Teria um carro com um ronco único e barulhento! ", carro: "Mazda RX7" },
+          { texto: "Participaria de uma corrida de rally ", carro: "Mitsubishi Lancer IX" }
+        ]
+      },
+      {
+        texto: "Em geral, você prefere",
+        opcoes: [
+          { texto: "Um carro fora do padrão.", carro: "Mazda RX7" },
+          { texto: "Um carro que chame atenção pela sua beleza, pelo seu ronco e seu conforto.", carro: "Toyota Supra MKIV" },
+          { texto: "Um carro que não é rapido. Porém bonito e customizável da melhor forma possível", carro: "Nissan Silvia S14" },
+          { texto: "Um carro barulhento e com certeza muito rápido!", carro: "Nissan Skyline R33" },
+          { texto: "Um carro que me permita correr nas ruas e na terra!", carro: "Mitsubishi Lancer IX" }
         ]
       },
     ];
     
 
     const imagensCarros = {
-      "Toyota Supra MKIV": "https://static0.carbuzzimages.com/wordpress/wp-content/uploads/2024/11/trd-3000gt-the-ultra-rare-factory-built-toyota-that-you-probably-never-knew-existed_4.jpg",
-      "Nissan Skyline R33": "https://media.whichcar.com.au/uploads/2025/04/EDewar-241010-Nissan-Skyline-R33-GTR-V-Spec-1643-e1744246469945.jpg",
-      "Nissan Silvia S14": "https://thrashgaragenz.com/cdn/shop/files/image_2024-06-04_183309345_928x700.png?v=1717482792",
-      "Mitsubishi Lancer IX": "https://i.ytimg.com/vi/s7WxOvSPPpM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCoZmP8fa5cTK4vXJiGX3jw9FB5kQ",
-      "Mazda RX7": "https://w0.peakpx.com/wallpaper/3/541/HD-wallpaper-mazda-rx-7-mazda-car-red-headlights.jpg"
+      "Toyota Supra MKIV": "https://i.pinimg.com/originals/a7/a9/bd/a7a9bdd2c1f20734c758b2299911cdff.gif",
+      "Nissan Skyline R33": "https://hips.hearstapps.com/roadandtrack/assets/16/35/1472823378-r33drift.gif",
+      "Nissan Silvia S14": "https://24.media.tumblr.com/e675327e14a7d2f7e56f0458755ccc47/tumblr_n0njh63YJi1rpdptuo1_r1_500.gif",
+      "Mitsubishi Lancer IX": "https://i.pinimg.com/originals/d9/64/da/d964da7012ac480b626b7451a0b64376.gif",
+      "Mazda RX7": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW9ucDExaXpkbTJiYzh5ZnBoNXF5YXc0Z3pnZjR4ZDl5Mzc5NjRueiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/be0CFCmmMxmm2Bqyyc/giphy.gif"
     };
     let contagem = {};
     let perguntaAtual = 0;
@@ -135,7 +149,7 @@
       }
 
       resultado.innerHTML = `
-        <h3>Seu JDM dos sonhos é:</h3>
+        <h3>Seu JDM seria o:</h3>
         <p><strong>${maisEscolhido}</strong></p>
         <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
       `;

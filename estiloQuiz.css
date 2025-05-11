@@ -1,7 +1,7 @@
 body {
   font-family: 'Rajdhani', sans-serif;
   font-size: 18px;
-  background: #000 url('https://i.pinimg.com/originals/7c/d4/15/7cd415c2a1d5649e16a8eef19cf13664.gif') center center / cover no-repeat;
+  background: #000 url('https://i.pinimg.com/originals/95/ef/b8/95efb8425d270933e5e890b33ab5ef70.gif') center center / cover no-repeat;
   color: white;
   min-height: 100vh;
   display: flex;
@@ -109,7 +109,6 @@ body {
 }
 
 .botao-resposta:hover {
-  background-color: #1aff00;
   color: #fff;
   transform: scale(1.05);
   box-shadow: 0 0 8px 4px white;
