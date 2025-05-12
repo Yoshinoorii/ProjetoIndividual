@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - JDM</title>
+    <link rel="stylesheet" href="./css/estilo_cadastro.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="logo-container">
+            <img src="https://flagcdn.com/w40/jp.png" alt="Japão">
+            <img src="https://flagcdn.com/w40/br.png" alt="Brasil">
+            <div class="logo">JDM</div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="quiz.html">QUIZ</a>
+            <a href="cadastro.html">LOGIN</a>
+            <a href="simulador.html">IMPORTAR</a>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <section class="login-box">
+            <h2>CADASTRO</h2>
+            <form onsubmit="verify(); return false;">
+                <div class="input-group">
+                    <label for="nomeInput">NOME</label>
+                    <input type="text" id="nomeInput" placeholder="Erick Yoshinori Pelicer Fuzimoto">
+                    <div id="div_nome_msg"></div> <!-- Mensagem nome -->
+                </div>
+
+                <div class="input-group">
+                    <label for="emailInput">E-MAIL</label>
+                    <input type="email" id="emailInput" placeholder="erick.fuzimoto@sptech.school" required oninput="verificarEmail()">
+                    <div id="div_email_msg"></div> <!-- Mensagem email -->
+                </div>
+
+                <div class="input-group">
+                    <label for="senhaInput">SENHA</label>
+                    <input type="password" id="senhaInput" placeholder="Digite sua senha" required oninput="verificarSenha()">
+                    <div id="div_senha_msg"></div> <!-- Mensagem senha -->
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmarSenhaInput">REDIGITE SUA SENHA</label>
+                    <input type="password" id="confirmarSenhaInput" placeholder="Confirme sua senha" required oninput="verificarConfirmacaoSenha()">
+                    <div id="div_confirmar_senha_msg"></div> <!-- Mensagem confirmação -->
+                </div>
+
+                <button type="submit">CADASTRAR</button>
+            </form>
+            <p class="signup-text">Já tem uma conta? <a href="login.html">Entre aqui</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Erick Yoshinori - Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function verificarSenha() {
+            var senha = senhaInput.value;
+            var num = "0123456789";
+            var carEsp = "!@#$%&*().";
+            var verificar_caracter_esp = 0;
+            var verificar_numero = 0;
+            var mensagem = "";
+
+            if (senha.length >= 8) {
+                mensagem += `<span style="color: green;">Senha com mais de 8 caracteres</span><br>`;
+            } else {
+                mensagem += `<span style="color: red;">A senha deve ter pelo menos 8 caracteres</span><br>`;
+            }
+
+            if (senha != senha.toLowerCase()) {
+                mensagem += `<span style="color: green;">Contém pelo menos 1 caractere maiúsculo</span><br>`;
+            } else {
+                mensagem += `<span style="color: red;">A senha deve conter pelo menos 1 caractere maiúsculo</span><br>`;
+            }
+
+            for (var j = 0; j < senha.length; j++) {
+                if (carEsp.includes(senha[j])) {
+                    verificar_caracter_esp = 1;
+                    break;
+                }
+            }
+
+            if (verificar_caracter_esp == 1) {
+                mensagem += `<span style="color: green;">Contém pelo menos 1 caractere especial</span><br>`;
+            } else {
+                mensagem += `<span style="color: red;">A senha deve conter pelo menos 1 caractere especial</span><br>`;
+            }
+
+            for (var i = 0; i < senha.length; i++) {
+                if (num.includes(senha[i])) {
+                    verificar_numero = 1;
+                    break;
+                }
+            }
+
+            if (verificar_numero == 1) {
+                mensagem += `<span style="color: green;">Contém pelo menos 1 número</span><br>`;
+            } else {
+                mensagem += `<span style="color: red;">A senha deve conter pelo menos 1 número</span><br>`;
+            }
+
+            div_senha_msg.innerHTML = mensagem;
+        }
+
+        function verificarConfirmacaoSenha() {
+        var senha = senhaInput.value;
+        var confirmarSenha = confirmarSenhaInput.value;
+        var mensagem = "";
+
+        if (confirmarSenha === senha) {
+        mensagem = `<span style="color: green;">As senhas coincidem</span>`;
+        } else {
+        mensagem = `<span style="color: red;">As senhas não coincidem</span>`;
+        }
+
+    div_confirmar_senha_msg.innerHTML = mensagem;
+}
+
+        function verificarEmail() {
+            var email = emailInput.value;
+            var mensagem = "";
+
+            if (email.includes("@") && (email.endsWith(".com") || email.endsWith(".com.br") || email.endsWith(".school") || email.endsWith(".org"))) {
+                mensagem = `<span style="color: green;">Email válido</span>`;
+            } else {
+                mensagem = `<span style="color: red;">Email inválido</span>`;
+            }
+
+            div_email_msg.innerHTML = mensagem;
+        }
+
+        function verify() {
+            var nome = nomeInput.value;
+            var email = emailInput.value;
+            var senha = senhaInput.value;
+            var num = "0123456789";
+            var carEsp = "!@#$%&*().";
+            var validacao = true;
+
+            if (email == "" || senha == "") {
+                alert("Preencha todos os campos corretamente.");
+                return;
+            }
+
+            if (!(email.includes("@") && (email.endsWith(".com") || email.endsWith(".com.br") || email.endsWith(".org")))) {
+                alert("Email inválido");
+                validacao = false;
+            }
+
+            if (senha.length < 8) {
+                alert("A senha deve conter pelo menos 8 caracteres");
+                validacao = false;
+            }
+
+            if (senha == senha.toLowerCase()) {
+                alert("A senha deve conter pelo menos 1 letra maiúscula");
+                validacao = false;
+            }
+
+            var encontrouCaractereEspecial = false;
+            for (var i = 0; i < senha.length; i++) {
+                if (carEsp.includes(senha[i])) {
+                    encontrouCaractereEspecial = true;
+                    break;
+                }
+            }
+
+            if (!encontrouCaractereEspecial) {
+                alert("A senha deve conter pelo menos 1 caractere especial");
+                validacao = false;
+            }
+
+            var encontrouNumero = false;
+            for (var i = 0; i < senha.length; i++) {
+                if (num.includes(senha[i])) {
+                    encontrouNumero = true;
+                    break;
+                }
+            }
+
+            if (!encontrouNumero) {
+                alert("A senha deve conter pelo menos 1 número");
+                validacao = false;
+            }
+
+            if (senha !== confirmarSenhaInput.value) {
+                alert("As senhas não coincidem");
+                validacao = false;
+            }
+
+            if (validacao) {
+                setTimeout(() => {
+                        fetch("/usuarios/cadastrar", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            // crie um atributo que recebe o valor recuperado aqui
+                            // Agora vá para o arquivo routes/usuario.js
+                            nomeServer: nome,
+                            emailServer: email,
+                            senhaServer: senha,
+                        }),
+                        })
+                        .then(function (resposta) {
+                            console.log("resposta: ", resposta);
+                            alert(`Usuário cadastrado com sucesso! Olá ${nome}`);
+                             window.location.href = "login.html";
+                        })
+                        .catch(function (resposta) {
+                            console.log(`#ERRO: ${resposta}`);
+                        });
+                }, "1000");
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - JDM</title>
+    <link rel="stylesheet" href="./css/estilo_login.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="logo-container">
+            <img src="https://flagcdn.com/w40/jp.png" alt="Japão">
+            <img src="https://flagcdn.com/w40/br.png" alt="Brasil">
+            <div class="logo">JDM</div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">HOME</a>
+            <a href="quiz.html">QUIZ</a>
+            <a href="login.html">LOGIN</a>
+            <a href="simulador.html">IMPORTAR</a>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <section class="login-box">
+            <h2>LOGIN</h2>
+                <div class="input-group">
+                    <label for="emailInput">E-MAIL</label>
+                    <input id="emailInput" type="email" placeholder="exemplo@exemplo.com">
+                    <div id="div_email_msg"></div> <!-- Mensagem email -->
+                </div>
+
+                <div class="input-group">
+                    <label for="senhaInput">SENHA</label>
+                    <input id="senhaInput" type="password" placeholder="Digite sua senha">
+                    <div id="div_senha_msg"></div> <!-- Mensagem senha -->
+                </div>
+
+                <button class="botao" onclick="entrar()">Entrar</button>
+                <br>
+              
+
+            </form>
+            <p class="signup-text">Não tem uma conta? <a href="cadastro.html">Cadastre-se aqui</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Erick Yoshinori - Todos os direitos reservados.</p>
+    </footer>
+
+
+
+    <script>
+    
+    function entrar() {
+
+        var emailVar = emailInput.value;
+        var senhaVar = senhaInput.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            console.log("Mensagem de erro para todos os campos em branco");
+            return false;
+        }
+        console.log("FORM LOGIN: ", emailVar);
+        console.log("FORM SENHA: ", senhaVar);
+
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+
+            if (resposta.ok) {
+                console.log(resposta);
+
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.EMAIL_USUARIO = json.email;
+                    sessionStorage.NOME_USUARIO = json.nome;
+                    sessionStorage.ID_USUARIO = json.id;
+
+                    setTimeout(function () {
+                        window.location = "dashboard.html";
+                    }, 1000); // apenas para exibir o loading
+
+                });
+
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+
+</script>
