@@ -214,8 +214,18 @@
                         })
                         .then(function (resposta) {
                             console.log("resposta: ", resposta);
-                            alert(`Usuário cadastrado com sucesso! Olá ${nome}`);
+                            if(resposta.ok){
+                                 alert(`Usuário cadastrado com sucesso! Olá ${nome}`);
+                                  setTimeout(function () {
+                                window.location = "login.html";
+                              }, 1000); 
                              window.location.href = "login.html";
+                            } else {
+                                alert(`Email já cadastrado!`);
+                            }
+
+                            
+                           
                         })
                         .catch(function (resposta) {
                             console.log(`#ERRO: ${resposta}`);
