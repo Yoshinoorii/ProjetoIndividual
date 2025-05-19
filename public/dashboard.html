@@ -3,9 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Document</title>
 </head>
-<body>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Gremio_logo.svg/1718px-Gremio_logo.svg.png" width="300">
+  <body>
+  <header class="topbar">
+    <div class="logo-container">
+      <a href="indexjp.html">
+        <img src="https://flagcdn.com/w40/jp.png" alt="Japão">
+      </a>
+      <a href="index.html">
+      <img src="https://flagcdn.com/w40/br.png" alt="Brasil">
+      </a>
+      <div class="logo">JDM</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">HOME</a>
+      <a href="quiz.html">QUIZ</a>
+      <a href="simulador.html">IMPORTAR</a>
+      <a href="index.html">SAIR</a>
+    </nav>
+  </header>
 </body>
+
+ <div class="chart-titulo">
+    <h1>Qual carro você e outras pessoas tirou?</h1>
+</div>
+
+ <div class="chart-container">
+  <canvas id="myChart"></canvas>
+</div>
+
 </html>
+
+<script>
+const ctx = document.getElementById('myChart');
+
+
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Supra', 'Skyline', 'Nissan Silvia S14', 'Mitsubishi Lancer IX', 'Mazda RX7'],
+    datasets: [{
+      label: 'Pessoas que tiraram esse carro',
+      data: [9, 6, 4, 2, 3],
+      backgroundColor: [
+        'white',
+        'blue',
+        'purple',
+        'yellow',
+        'red'
+      ],
+      borderColor: 'black',
+      borderWidth: 2,
+      barThickness: 50
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false 
+      }
+    },
+    scales: {
+      y: {
+        ticks:{
+            color: 'white',
+          }
+        },
+        x:{
+            ticks:{
+                color: 'white'
+        },
+        beginAtZero: true
+      } 
+    } 
+  }
+});
+</script>
+
