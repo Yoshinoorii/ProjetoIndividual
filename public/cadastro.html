@@ -71,13 +71,13 @@
             var mensagem = "";
 
             if (senha.length >= 8) {
-                mensagem += `<span style="color: green;">Senha com mais de 8 caracteres</span><br>`;
+                mensagem += `<span style="color: greenyellow;">Senha com mais de 8 caracteres</span><br>`;
             } else {
                 mensagem += `<span style="color: red;">A senha deve ter pelo menos 8 caracteres</span><br>`;
             }
 
             if (senha != senha.toLowerCase()) {
-                mensagem += `<span style="color: green;">Contém pelo menos 1 caractere maiúsculo</span><br>`;
+                mensagem += `<span style="color: greenyellow;">Contém pelo menos 1 caractere maiúsculo</span><br>`;
             } else {
                 mensagem += `<span style="color: red;">A senha deve conter pelo menos 1 caractere maiúsculo</span><br>`;
             }
@@ -90,7 +90,7 @@
             }
 
             if (verificar_caracter_esp == 1) {
-                mensagem += `<span style="color: green;">Contém pelo menos 1 caractere especial</span><br>`;
+                mensagem += `<span style="color: greenyellow;">Contém pelo menos 1 caractere especial</span><br>`;
             } else {
                 mensagem += `<span style="color: red;">A senha deve conter pelo menos 1 caractere especial</span><br>`;
             }
@@ -103,7 +103,7 @@
             }
 
             if (verificar_numero == 1) {
-                mensagem += `<span style="color: green;">Contém pelo menos 1 número</span><br>`;
+                mensagem += `<span style="color: greenyellow;">Contém pelo menos 1 número</span><br>`;
             } else {
                 mensagem += `<span style="color: red;">A senha deve conter pelo menos 1 número</span><br>`;
             }
@@ -117,7 +117,7 @@
         var mensagem = "";
 
         if (confirmarSenha === senha) {
-        mensagem = `<span style="color: green;">As senhas coincidem</span>`;
+        mensagem = `<span style="color: greenyellow;">As senhas coincidem</span>`;
         } else {
         mensagem = `<span style="color: red;">As senhas não coincidem</span>`;
         }
@@ -130,7 +130,7 @@
             var mensagem = "";
 
             if (email.includes("@") && (email.endsWith(".com") || email.endsWith(".com.br") || email.endsWith(".school") || email.endsWith(".org"))) {
-                mensagem = `<span style="color: green;">Email válido</span>`;
+                mensagem = `<span style="color: greenyellow;">Email válido</span>`;
             } else {
                 mensagem = `<span style="color: red;">Email inválido</span>`;
             }

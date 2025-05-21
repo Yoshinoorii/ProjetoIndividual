@@ -27,15 +27,15 @@ body {
 }
 
 .logo-container img {
-  width: 30px;
-  height: 22px;
+  width: 35px;
+  height: 23px;
   object-fit: cover;
   border: 1px solid #fff;
   border-radius: 3px;
 }
 
 .logo {
-  font-size: 34px;
+  font-size: 43px;
   color: #ff3333;
   font-weight: bold;
   text-transform: uppercase;
@@ -46,7 +46,7 @@ body {
   text-decoration: none;
   color: #fff;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 24px;
   transition: 0.3s;
 }
 
@@ -67,7 +67,6 @@ body {
   font-weight: bold;
   text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
   box-shadow: 0px 0px 40px 0px rgb(136, 3, 3);
-
 }
 
 .banner h1 {
@@ -181,7 +180,7 @@ body {
 .drift-text a {
   display: block;
   text-decoration: none;
-  width: 100%;
+  width: 95%;
   padding: 12px;
   background-color: #e30808;
   color: white;
@@ -192,6 +191,12 @@ body {
   cursor: pointer;
   margin-bottom: 10px;
   transition: 0.3s;
+}
+
+.drift-text a:hover{
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px 4px white;
 }
 
 .drift-gif img {

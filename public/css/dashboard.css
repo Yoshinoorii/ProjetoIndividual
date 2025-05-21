@@ -74,3 +74,13 @@ width: 50%;
     scroll-behavior: smooth;
 }
 
+footer {
+  text-align: center;
+  background-color: #000;
+  padding: 15px;
+  font-size: 16px;
+  border-top: 2px solid #ff3333;
+  color: #777;
+  margin-top: auto;
+  margin-top: 50px;
+}

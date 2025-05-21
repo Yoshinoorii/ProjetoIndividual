@@ -1,0 +1,128 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: url('../fotos/bannerCarros.jpg') center center / cover no-repeat;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  scroll-behavior: smooth;
+}
+
+/* TOPO */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #111;
+  border-bottom: 2px solid #ff3333;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-container img {
+  width: 35px;
+  height: 23px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+}
+
+.logo {
+  font-size: 43px;
+  color: #ff3333;
+  font-weight: bold;
+}
+
+.nav-links a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 22px;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff3333;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 64px;
+  margin: 40px 0;
+  color: #ff3333;
+}
+
+/* CARROSSEL */
+.carrossel-container {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 20px;
+  overflow: visible;
+}
+
+.carrossel {
+  display: flex;
+  gap: 30px;
+  scroll-behavior: smooth;
+  padding: 20px 20px 20px 30px;
+  overflow: auto;
+}
+
+.carrossel::-webkit-scrollbar {
+  height: 10px;
+}
+
+.carrossel::-webkit-scrollbar-thumb {
+  background: #ff3333;
+  border-radius: 5px;
+}
+
+.carro-card {
+  min-width: 300px;
+  background-color: #1a1a1a;
+  border-radius: 15px;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.carro-card:hover {
+  transform: scale(1.05);
+}
+
+.carro-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.carro-card h2 {
+  font-size: 28px;
+  margin: 15px;
+  color: #ff3333;
+  text-align: center;
+}
+
+.carro-card p {
+  font-size: 18px;
+  margin: 0 15px 20px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  background-color: #000;
+  padding: 20px;
+  color: #777;
+  font-size: 16px;
+  border-top: 2px solid #ff3333;
+}
