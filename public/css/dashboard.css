@@ -58,9 +58,6 @@ body {
 display: flex;
 justify-content: center;
 align-items: center;
-padding-top: 5vh;
-padding-left: 50vh;
-width: 50%;
 }
 
 .chart-titulo{
@@ -82,5 +79,4 @@ footer {
   border-top: 2px solid #ff3333;
   color: #777;
   margin-top: auto;
-  margin-top: 50px;
 }
