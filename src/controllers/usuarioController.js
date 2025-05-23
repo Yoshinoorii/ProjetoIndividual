@@ -1,4 +1,5 @@
 var usuarioModel = require("../models/usuarioModel");
+const bcrypt = require('bcrypt');
 
 function autenticar(req, res) {
     var email = req.body.emailServer;
@@ -9,68 +10,66 @@ function autenticar(req, res) {
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
     } else {
-        usuarioModel.autenticar(email, senha)
-            .then(
-                function (resultadoAutenticar) {
-                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
-                    if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-                        res.json(resultadoAutenticar[0])
-                    } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
+        usuarioModel.buscarPorEmail(email, senha)
+            .then(async function (resultado) {
+                if (resultado.length == 1) {
+                    const usuario = resultado[0];
+                    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
+                    if (senhaCorreta) {
+                        res.json(usuario);
                     } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                        res.status(403).send("Senha incorreta");
                     }
+                } else {
+                    res.status(403).send("Email inválido ou não cadastrado");
                 }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+            })
+            .catch(function (erro) {
+                console.log(erro);
+                res.status(500).json(erro.sqlMessage);
+            });
     }
 }
 
-function cadastrar(req, res) {
-    console.log(req.body)
-    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+async function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
 
-    // Faça as validações dos valores
     if (nome == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    }
-    else {
+    } else {
+        try {
+            const hash = await bcrypt.hash(senha, 10);
 
-        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        usuarioModel.cadastrar(nome, email, senha)
-            .then(
-                function (resultado) {
+            usuarioModel.cadastrar(nome, email, hash)
+                .then((resultado) => {
                     res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
+                })
+                .catch((erro) => {
                     console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+
+                    // Tratamento de erro para email duplicado e senha muito longa
+                    if (erro.code === 'ER_DUP_ENTRY') {
+                        res.status(400).send("Email já cadastrado!");
+                    } else if (erro.code === 'ER_DATA_TOO_LONG') {
+                        res.status(400).send("Senha criptografada muito longa para o banco de dados!");
+                    } else {
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                });
+        } catch (err) {
+            console.error("Erro ao gerar hash da senha:", err);
+            res.status(500).send("Erro ao criptografar a senha.");
+        }
     }
 }
 
 module.exports = {
     autenticar,
     cadastrar
-}
+};
