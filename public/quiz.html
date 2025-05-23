@@ -15,9 +15,9 @@
     </div>
     <nav class="nav-links">
       <a href="index.html">HOME</a>
-      <a href="quiz.html">QUIZ</a>
-      <a href="login.html">LOGIN</a>
+      <a href="carros.html">CARROS</a>
       <a href="simulador.html">IMPORTAR</a>
+      <a href="login.html">SAIR</a>
     </nav>
   </header>
 
@@ -61,37 +61,39 @@
         opcoes: [
           { texto: "Drift", carro: "Nissan Silvia S14" },
           { texto: "Velocidade", carro: "Nissan Skyline R33" },
-          { texto: "Estilo", carro: ["Toyota Supra MKIV", "Mazda RX7"] },
-          { texto: "Rally", carro: "Mitsubishi Lancer IX" }
+          { texto: "Estilo", carro: "Toyota Supra MKIV", },
+          { texto: "Rally", carro: "Mitsubishi Lancer IX" },
+          { texto: "Tunagem", carro: "Mazda RX7" }
+        ]
+      },
+            {
+        texto: "Você prefere",
+        opcoes: [
+          { texto: "Ficar em casa dormindo", carro: "Mazda RX7" },
+          { texto: "Ser o centro das atenções", carro: "Toyota Supra MKIV" },
+          { texto: "Me desafiar a coisas novas", carro: "Nissan Silvia S14" },
+          { texto: "Adrenalina e adrenalina!", carro: "Nissan Skyline R33" },
+          { texto: "Trilhas e viagens", carro: "Mitsubishi Lancer IX" }
         ]
       },
       {
         texto: "Num evento de carros, você escolhe o carro:",
         opcoes: [
-        { texto: "O Barulhento e rápido", carro: ["Mitsubishi Lancer IX", "Nissan Skyline R33"] },
-        { texto: "Com o motor exposto e o carro modificado", carro: "Mazda RX7" },
-        { texto: "O Mais bonito e atrativo", carro: "Toyota Supra MKIV" },
-        {texto: "O que está dando drift no evento", carro: "Nissan Silvia S14"}
+        { texto: "O mais barulhento e rápido do evento", carro: "Nissan Skyline R33" },
+        { texto: "Um carro fora dos padrões para todos olharem", carro: "Mazda RX7" },
+        { texto: "Que corre na terra e nas estradas!", carro: "Mitsubishi Lancer IX" },
+        { texto: "O mais lindo, atrativo e clássico", carro: "Toyota Supra MKIV" },
+        {texto: "O carro que eu puder modificar e fazer drift", carro: "Nissan Silvia S14"}
     ]
     },
       {
         texto: "Se você pudesse:",
         opcoes: [
-          { texto: "Acelerar numa reta utilizando 100% do carro", carro: "Nissan Skyline R33" },
-          { texto: "Descer uma montanha no drift", carro: "Nissan Silvia S14"},
-          { texto: "Exibir meu carro num evento à noite", carro: "Toyota Supra MKIV" },
-          { texto: "Teria um carro com um ronco único e barulhento! ", carro: "Mazda RX7" },
+          { texto: "Iria com uma corrida com meu carro", carro: "Nissan Skyline R33" },
+          { texto: "Iria para um evento de Drift", carro: "Nissan Silvia S14"},
+          { texto: "Acelerava numa exposição de JDM", carro: "Toyota Supra MKIV" },
+          { texto: "Estaria num rolê a noite! ", carro: "Mazda RX7" },
           { texto: "Participaria de uma corrida de rally ", carro: "Mitsubishi Lancer IX" }
-        ]
-      },
-      {
-        texto: "Em geral, você prefere",
-        opcoes: [
-          { texto: "Um carro fora do padrão com o barulho mais icônico.", carro: "Mazda RX7" },
-          { texto: "Um carro bonito, chamativo e confortável", carro: "Toyota Supra MKIV" },
-          { texto: "Um carro de drift customizável da melhor forma possível", carro: "Nissan Silvia S14" },
-          { texto: "Um carro rei das estradas!", carro: "Nissan Skyline R33" },
-          { texto: "Acelerar na terra!", carro: "Mitsubishi Lancer IX" }
         ]
       },
     ];
@@ -101,8 +103,8 @@
       "Toyota Supra MKIV": "https://i.pinimg.com/originals/a7/a9/bd/a7a9bdd2c1f20734c758b2299911cdff.gif",
       "Nissan Skyline R33": "https://hips.hearstapps.com/roadandtrack/assets/16/35/1472823378-r33drift.gif",
       "Nissan Silvia S14": "https://24.media.tumblr.com/e675327e14a7d2f7e56f0458755ccc47/tumblr_n0njh63YJi1rpdptuo1_r1_500.gif",
-      "Mitsubishi Lancer IX": "https://i.pinimg.com/originals/d9/64/da/d964da7012ac480b626b7451a0b64376.gif",
-      "Mazda RX7": "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW9ucDExaXpkbTJiYzh5ZnBoNXF5YXc0Z3pnZjR4ZDl5Mzc5NjRueiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/be0CFCmmMxmm2Bqyyc/giphy.gif"
+      "Mitsubishi Lancer IX": "https://i.pinimg.com/736x/c3/4c/5b/c34c5b8b7a16f6f58149c2b2f08ac3f9.jpg",
+      "Mazda RX7": "https://i.pinimg.com/736x/7c/54/7a/7c547ad82cdd0e2a83e0dde8be6b1b7c.jpg"
     };
     let contagem = {};
     let perguntaAtual = 0;
@@ -149,11 +151,46 @@
         }
       }
 
-      resultado.innerHTML = `
-        <h3>Seu JDM seria o:</h3>
+      if(maisEscolhido == 'Toyota Supra MKIV'){
+        resultado.innerHTML = `
+        <h3>O JDM que mais combina com você é:</h3>
         <p><strong>${maisEscolhido}</strong></p>
         <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
-      <br> testestestestestestestestestestestetset`;
+      <br><br><h2> Você é do tipo de pessoa que gosta de tudo um pouco, uma pessoa curiosa e aventureira.<br><br> O Supra é o carro ideal ideal para você! O clássico JDM que mistura velocidade, estilo, personalização e drift em um só! Uma verdadeira máquina!</h2>`;
+      }
+
+      if(maisEscolhido == 'Nissan Skyline R33'){
+        resultado.innerHTML = `
+        <h3>O JDM que mais combina com você é:</h3>
+        <p><strong>${maisEscolhido}</strong></p>
+        <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
+      <br><br><h2> Você é do tipo de pessoa que gosta da adrenalina, de sentir o momento na sua pele.<br><br> Por isso o Skyline R33 é perfeito para você! O JDM famoso por sua estética e aceleração.<br><br> Onde quer que esteja, seus rastros, gritos e velocidade chama a atenção de qualquer um que esteja próximo!</h2>`;
+      }
+      
+      if(maisEscolhido == 'Nissan Silvia S14'){
+        resultado.innerHTML = `
+        <h3>O JDM que mais combina com você é:</h3>
+        <p><strong>${maisEscolhido}</strong></p>
+        <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
+      <br><br><h2> Uma pessoa vaidosa! Igual ao clássico Silvia S14, Um carro que mistura drift, tunagem e estética em um só!<br><br> Você passaria horas procurando roupas estilosas, acessórios e tênis para você!<br><br> Assim como o S14 ele sempre tem uma variedade de tunagens e personalizações, chamando a atenção pela sua beleza e seus drifts únicos!</h2>`;
+      }
+
+      if(maisEscolhido == 'Mitsubishi Lancer IX'){
+        resultado.innerHTML = `
+        <h3>O JDM que mais combina com você é:</h3>
+        <p><strong>${maisEscolhido}</strong></p>
+        <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
+      <br><br><h2> Você é uma pessoa exploradora e curiosa! Se adapta a qualquer lugar, ambiente e pessoa por isso o Lancer IX é o seu carro!<br><br> Independente do lugar continua desempenhando de forma incrível e chamando a atenção por onde passa, seja no Rally ou nas pistas!</h2>`;
+      }
+
+      if(maisEscolhido == 'Mazda RX7'){
+        resultado.innerHTML = `
+        <h3>O JDM que mais combina com você é:</h3>
+        <p><strong>${maisEscolhido}</strong></p>
+        <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
+      <br><br><h2> Estilo fora dos padrões define você! Igual o RX7, o clássico JDM diferente dos padrões.<br><br> Um motor rotativo diferente de todos e uma estética que prende olhares chamando atenção seja parado ou fazendo drift! </h2>`;
+      }
+      
     }
 
     mostrarProximaPergunta();

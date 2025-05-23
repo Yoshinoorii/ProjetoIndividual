@@ -59,6 +59,7 @@ body {
   font-size: 64px;
   margin: 40px 0;
   color: #ff3333;
+  animation: fadeInTitle 1.0s ease-out;
 }
 
 /* CARROSSEL */
@@ -67,6 +68,7 @@ body {
   margin: 0 auto 80px;
   padding: 20px;
   overflow: visible;
+  animation: fadeInCarrossel 1.5s ease-out;
 }
 
 .carrossel {
@@ -126,3 +128,28 @@ footer {
   font-size: 16px;
   border-top: 2px solid #ff3333;
 }
+
+@keyframes fadeInTitle {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+}
+
+@keyframes fadeInCarrossel {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+}
+
