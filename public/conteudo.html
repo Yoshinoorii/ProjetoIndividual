@@ -23,12 +23,12 @@
       <a href="index.html">HOME</a>
       <a href="quiz.html">QUIZ</a>
       <a href="simulador.html">IMPORTAR</a>
-      <a href="index.html">SAIR</a>
+      <a href="index.html" id="sair">SAIR</a>
     </nav>
   </header>
 
   <section class="banner">
-    <h1>Bem-vindo Usuário!</h1>
+    <h1>Bem-vindo <span id="name_user"></span> </h1>
   </section>
 
   <main class="content">
@@ -64,3 +64,15 @@
   </body>
 
   </html>
+
+  <script>
+    var nameUser = sessionStorage.NOME_USUARIO;
+    name_user.innerHTML = nameUser
+
+    var sair = document.getElementById('sair');
+
+    sair.addEventListener('click', function(){
+      sessionStorage.clear();
+    })
+
+  </script>
