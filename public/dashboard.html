@@ -44,50 +44,67 @@
 </html>
 
 
-<script>
-const ctx = document.getElementById('myChart');
+ <script>
+    // Seleciona o contexto do canvas
+    const ctx = document.getElementById('myChart').getContext('2d');
 
+    // Função para carregar dados do backend e montar o gráfico
+    fetch('/quiz')
+      .then(response => response.json())
+      .then(data => {
+        // Exemplo do JSON esperado:
+        // [ { nomecarro: 'Toyota Supra MKIV', total: 9 }, {...}, ...]
 
-new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['Supra', 'Skyline', 'Nissan Silvia S14', 'Mitsubishi Lancer IX', 'Mazda RX7'],
-    datasets: [{
-      label: 'Pessoas que tiraram esse carro',
-      data: [9, 6, 4, 2, 3],
-      backgroundColor: [
-        'white',
-        'blue',
-        'purple',
-        'yellow',
-        'red'
-      ],
-      borderColor: 'black',
-      borderWidth: 2,
-      barThickness: 50
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false 
-      }
-    },
-    scales: {
-      y: {
-        ticks:{
-            color: 'white',
+        const labels = data.map(item => item.nomecarro);
+        const valores = data.map(item => item.total);
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Pessoas que tiraram esse carro',
+              data: valores,
+              backgroundColor: [
+                'white',
+                'blue',
+                'purple',
+                'yellow',
+                'red'
+              ],
+              borderColor: 'black',
+              borderWidth: 2,
+              barThickness: 50
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: 'white'
+                }
+              },
+              x: {
+                ticks: {
+                  color: 'white'
+                }
+              }
+            }
           }
-        },
-        x:{
-            ticks:{
-                color: 'white'
-        },
-        beginAtZero: true
-      } 
-    } 
-  }
-});
-</script>
+        });
+      })
+      .catch(error => {
+        console.error('Erro ao carregar dados do gráfico:', error);
+        
+      });
+  </script>
+</body>
+</html>
 

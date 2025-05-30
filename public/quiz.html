@@ -5,7 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz JDM</title>
   <link rel="stylesheet" href="./css/estiloQuiz.css" />
+
+  <script>
+  var usuarioLogado = sessionStorage.getItem('ID_USUARIO');
+    if (!usuarioLogado) {
+    window.location.href = 'login.html';
+    }
+</script>
+
 </head>
+
 <body>
   <header class="topbar">
     <div class="logo-container">
@@ -20,6 +29,7 @@
       <a href="login.html">SAIR</a>
     </nav>
   </header>
+  
 
   <main class="login-container">
     <section class="login-box">
@@ -36,6 +46,9 @@
   </footer>
 
   <script>
+
+    
+
     const perguntas = [
       {
         texto: "Qual marca você prefere?",
@@ -139,6 +152,8 @@
       }
     }
 
+    let carroFinal = "";
+
     function mostrarResultado() {
       const resultado = document.getElementById("quiz-resultado");
       let maisEscolhido = "";
@@ -151,7 +166,20 @@
         }
       }
 
+      carroFinal = maisEscolhido;
+
+      let idCarro = null;
+
+      const carrosJDM = {
+        "Toyota Supra MKIV": 1,
+        "Nissan Silvia S14": 2,
+        "Nissan Skyline R33": 3,
+        "Mitsubishi Lancer IX": 4,
+        "Mazda RX7": 5
+      };
+
       if(maisEscolhido == 'Toyota Supra MKIV'){
+        idCarro = carrosJDM[maisEscolhido];
         resultado.innerHTML = `
         <h3>O JDM que mais combina com você é:</h3>
         <p><strong>${maisEscolhido}</strong></p>
@@ -160,6 +188,7 @@
       }
 
       if(maisEscolhido == 'Nissan Skyline R33'){
+        idCarro = carrosJDM[maisEscolhido];
         resultado.innerHTML = `
         <h3>O JDM que mais combina com você é:</h3>
         <p><strong>${maisEscolhido}</strong></p>
@@ -168,6 +197,7 @@
       }
       
       if(maisEscolhido == 'Nissan Silvia S14'){
+        idCarro = carrosJDM[maisEscolhido];
         resultado.innerHTML = `
         <h3>O JDM que mais combina com você é:</h3>
         <p><strong>${maisEscolhido}</strong></p>
@@ -176,6 +206,7 @@
       }
 
       if(maisEscolhido == 'Mitsubishi Lancer IX'){
+        idCarro = carrosJDM[maisEscolhido];
         resultado.innerHTML = `
         <h3>O JDM que mais combina com você é:</h3>
         <p><strong>${maisEscolhido}</strong></p>
@@ -184,16 +215,53 @@
       }
 
       if(maisEscolhido == 'Mazda RX7'){
+        idCarro = carrosJDM[maisEscolhido];
         resultado.innerHTML = `
         <h3>O JDM que mais combina com você é:</h3>
         <p><strong>${maisEscolhido}</strong></p>
         <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
       <br><br><h2> Estilo fora dos padrões define você! Igual o RX7, o clássico JDM diferente dos padrões.<br><br> Um motor rotativo diferente de todos e uma estética que prende olhares chamando atenção seja parado ou fazendo drift! </h2>`;
       }
-      
+      quizBD(idCarro);
     }
 
     mostrarProximaPergunta();
+
+       
+        
+        function quizBD(idCarro) {
+        var id = sessionStorage.getItem("ID_USUARIO")
+        fetch("/quiz", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idServer: id,
+                quizServer: idCarro
+            }),
+        })
+            .then(function (resposta) {
+                console.log("resposta: ", resposta);
+                if (resposta.ok) {
+
+                    console.log("carro inserido no banco de dados")
+
+                } else {
+                    throw "Houve um erro ao realizar o quiz!";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+            });
+
+        return false;
+
+        
+
+    }
+
+
   </script>
 </body>
 </html>

@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simulador - JDM</title>
   <link rel="stylesheet" href="./css/simulador.css" />
+
+    <script>
+  var usuarioLogado = sessionStorage.getItem('ID_USUARIO');
+    if (!usuarioLogado) {
+    window.location.href = 'login.html';
+    }
+</script>
 </head>
 <body>
   <header class="topbar">

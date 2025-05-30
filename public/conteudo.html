@@ -6,6 +6,12 @@
   <title>JDM CULT</title>
   <link rel="stylesheet" href="./css/estiloConteudo.css">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <script>
+  var usuarioLogado = sessionStorage.getItem('ID_USUARIO');
+    if (!usuarioLogado) {
+    window.location.href = 'login.html';
+    }
+</script>
 </head>
 
 <body>
