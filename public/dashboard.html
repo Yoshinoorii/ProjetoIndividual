@@ -1,110 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard JDM</title>
+  <link rel="stylesheet" href="./css/dashboard.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
 </head>
-  <body>
-  <header class="topbar">
-    <div class="logo-container">
-      <a href="indexjp.html">
-        <img src="https://flagcdn.com/w40/jp.png" alt="Japão">
-      </a>
-      <a href="index.html">
-      <img src="https://flagcdn.com/w40/br.png" alt="Brasil">
-      </a>
-      <div class="logo">JDM</div>
-    </div>
-    <nav class="nav-links">
-      <a href="index.html">HOME</a>
-      <a href="quiz.html">QUIZ</a>
-      <a href="simulador.html">IMPORTAR</a>
-      <a href="index.html">SAIR</a>
+<body>
+
+<div class="dashboard-container">
+  <aside class="sidebar">
+    <div class="logo-sidebar">JDM</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="simulador.html">Importar</a>
+      <a href="index.html">Sair</a>
     </nav>
-  </header> 
-  
+  </aside>
+
+  <main class="main-content">
+    <h1 class="dashboard-title">Painel de Resultados</h1>
+
+    <section class="kpis">
+      <div class="kpi-card" id="kpi-participantes-box">
+        <h3>Total de Participantes</h3>
+        <p id="kpiparticipantes"></p>
+      </div>
+      <div class="kpi-card" id="kpi-tesouro-box">
+        <h3>Tesouro Escondido</h3>
+        <p id="kpi-tesouro"></p>
+      </div>
+      <div class="kpi-card" id="kpi-carro-maistirado-box">
+        <h3>Carro Mais Tirado</h3>
+        <p id="kpiCarroMaisTirado"></p>
+      </div>
+    </section>
+
+    <section class="chart-area">
+      <div class="chart-box">
+        <canvas id="chart-resultado"></canvas>
+      </div>
+      <div class="kpi-card kpi-resultado-box" id="kpi-resultado-box">
+      <h3>Seu Resultado</h3>
+      <p id="kpi-resultado"></p>
+    </div>
+    </section>
+
+    
+
+  </main>
+</div>
+
 </body>
-
- <div class="chart-titulo">
-    <h1>Qual carro você e outras pessoas tirou?</h1>
-</div>
-
- <div class="chart-container">
-  <canvas id="myChart"></canvas>
-</div>
-
-
-<footer>
-    <p>© 2025 Erick Yoshinori - Todos os direitos reservados.</p>
-  </footer> 
-
 </html>
 
+<script>
 
- <script>
-    // Seleciona o contexto do canvas
-    const ctx = document.getElementById('myChart').getContext('2d');
+function inserirTentativa() {
+  const kpiparticipantes = document.getElementById('kpiparticipantes');
 
-    // Função para carregar dados do backend e montar o gráfico
-    fetch('/quiz')
-      .then(response => response.json())
-      .then(data => {
-        // Exemplo do JSON esperado:
-        // [ { nomecarro: 'Toyota Supra MKIV', total: 9 }, {...}, ...]
+  fetch("/dash/qtdQuiz")
+    .then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                kpiparticipantes.innerHTML = json[0].totalParticipantes;
+            });
+        } else {
+            console.log("Erro na resposta da API.");
+        }
+    })
+    .catch(function (erro) {
+        console.log("Erro no fetch: ", erro);
+    });
+}
 
-        const labels = data.map(item => item.nomecarro);
-        const valores = data.map(item => item.total);
 
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: labels,
-            datasets: [{
-              label: 'Pessoas que tiraram esse carro',
-              data: valores,
-              backgroundColor: [
-                'white',
-                'blue',
-                'purple',
-                'yellow',
-                'red'
-              ],
-              borderColor: 'black',
-              borderWidth: 2,
-              barThickness: 50
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                display: false
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  color: 'white'
-                }
-              },
-              x: {
-                ticks: {
-                  color: 'white'
-                }
-              }
+function mostrarCarroMaisTirado() {
+    const kpiCarroMaisTirado = document.getElementById('kpiCarroMaisTirado');
+
+    fetch("/dash/carroMaisTirado")
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Erro na resposta da API");
             }
-          }
+        })
+        .then(json => {
+            kpiCarroMaisTirado.innerHTML = `${json.nomecarro} <br> (${json.quantidade}x)`;
+        })
+        .catch(erro => {
+            console.log("Erro no fetch carroMaisTirado: ", erro);
+            kpiCarroMaisTirado.innerHTML = "Erro ao carregar dados";
         });
-      })
-      .catch(error => {
-        console.error('Erro ao carregar dados do gráfico:', error);
-        
-      });
-  </script>
-</body>
-</html>
+}
+
+window.onload = function() {
+    inserirTentativa();
+    mostrarCarroMaisTirado();
+}
+
+  const ctx = document.getElementById('chart-resultado').getContext('2d');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Supra MKIV', 'RX7', 'Silvia S14', 'Skyline R33', 'Lancer IX'],
+      datasets: [{
+        label: 'Quantidade de vezes tirado',
+        data: [12, 5, 7, 9, 3], // Exemplo de dados
+        backgroundColor: '#ff3333',
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Distribuição dos Resultados'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            color: 'white'
+          },
+          grid: {
+            color: '#444'
+          }
+        },
+        x: {
+          ticks: {
+            color: 'white'
+          },
+          grid: {
+            color: '#444'
+          }
+        }
+      }
+    }
+  });
+</script>
 

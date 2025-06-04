@@ -17,7 +17,7 @@ function insertCarro(id_quiz, nomecarro) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql =
-        `INSERT INTO resultado_quiz VALUES (DEFAULT, ${id_quiz}, ${nomecarro}, DEFAULT)`;
+        `INSERT INTO resultado_quiz VALUES (DEFAULT, ${id_quiz}, ${nomecarro}, NOW())`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
@@ -27,7 +27,7 @@ function attCarro(nomecarro, id_quiz) {
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucaoSql =
-        `UPDATE resultado_quiz SET fkcarro = ${nomecarro} where fkUsuario = ${id_quiz}`;
+        `UPDATE resultado_quiz SET fkcarro = ${nomecarro}, dataRegistro = NOW() where fkUsuario = ${id_quiz};`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 

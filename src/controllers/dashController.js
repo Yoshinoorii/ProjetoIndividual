@@ -1,40 +1,28 @@
 var dashModel = require("../models/dashModel");
 
-function dadosCarro(req, res) {
-
-    const limite_linhas = 7;
-
-    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
-
-    dashModel.dadosCarro(limite_linhas).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+function qtdQuiz(req, res) {
+    dashModel.qtdQuiz().then(function(resultado){
+        res.status(200).json(resultado);
+    }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     });
 }
 
-function dadosCadastro(req, res) {
-
-    dashModel.dadosCadastro().then(function (resultado) {
+function carroMaisTirado(req, res) {
+    dashModel.carroMaisTirado()
+    .then(function(resultado){
         if (resultado.length > 0) {
-            res.status(200).json(resultado);
+            res.status(200).json(resultado[0]);
         } else {
-            res.status(204).send("Nenhum resultado encontrado!")
+            res.status(200).json({ nomecarro: "Nenhum resultado encontrado", total: 0 });
         }
-    }).catch(function (erro) {
-        console.log(erro);
-        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+    })
+    .catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     });
 }
 
 module.exports = {
-    dadosCarro,
-    dadosCadastro
+    qtdQuiz,
+    carroMaisTirado
 }

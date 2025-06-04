@@ -132,7 +132,28 @@ body {
   font-size: 24px;
 }
 
-/* Rodapé */
+.botao-dashboard {
+  display: block;
+  text-decoration: none;
+  width: 95%;
+  padding: 12px;
+  background-color: #e30808;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: 0.3s;
+}
+
+.botao-dashboard:hover{
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 0 8px 4px white;
+}
+
 footer {
   text-align: center;
   background-color: #000;

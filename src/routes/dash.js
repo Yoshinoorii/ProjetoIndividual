@@ -3,13 +3,14 @@ var router = express.Router();
 
 var dashController = require("../controllers/dashController");
 
-router.get("/carros", function (req, res) {
-    dashController.dadosCarro(req, res);
+//Recebendo os dados do html e direcionando para a função cadastrar de dashController.js
+
+router.get("/qtdQuiz", function (req, res) {
+    dashController.qtdQuiz(req, res);
 });
 
-router.get("/fezQuiz", function (req, res) {
-    dashController.dadosCadastro(req, res);
+router.get("/carroMaisTirado", function (req, res) {
+    dashController.carroMaisTirado(req, res);
 });
-
 
 module.exports = router;

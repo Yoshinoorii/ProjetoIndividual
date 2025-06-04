@@ -81,27 +81,32 @@
     var impostoParanagua = 1.4;
     var impostoVitoria = 1.33;
     var impostoRecife = 1.45;
+    
+     var proibidos = [
+    "Subaru Impreza WRX STI 2002",
+    "Honda Civic Type R 1999",
+    "Mazda RX-7 1998"
+  ];
 
     function simular() {
       var carro = carroInput.value;
       var porto = portoInput.value;
 
-      // se o usuário não selecionar um carro ou porto
       if (carro == "" || porto == "") {
         resultadoSimulacao.innerHTML = "<span style='color: red;'>Por favor, preencha todos os campos corretamente.</span>";
         return;
       }
 
-      if (carro == "Subaru Impreza WRX STI 2002" || carro == "Honda Civic Type R 1999" || carro == "Mazda RX-7 1998") {
+      for (var i = 0; i < proibidos.length; i++) {
+      if (carro === proibidos[i]) {
         resultadoSimulacao.innerHTML = "<span style='color: red;'>Impossível Importar, veículo ainda não tem mais que 30 Anos.</span>";
         return;
       }
+    }
 
-      // var para o valor do carro e imposto
       var valor = 0;
       var imposto = 0;
 
-      // atribuindo valor de carro com base na escolha
       if (carro === "Nissan Skyline GT-R 1990") valor = nissanSkyline1990;
       else if (carro === "Toyota Supra MK4 1995") valor = toyotaSupra1995;
       else if (carro === "Mazda RX-7 1998") valor = mazdaRX71998;
@@ -109,20 +114,17 @@
       else if (carro === "Subaru Impreza WRX STI 2002") valor = subaruImpreza2002;
       else if (carro === "Nissan Silvia S14 1994") valor = nissanSilvia1994;
 
-      // atribuindo imposto com base no porto
       if (porto === "Santos") imposto = impostoSantos;
       else if (porto === "RioDeJaneiro") imposto = impostoRioDeJaneiro;
       else if (porto === "Paranagua") imposto = impostoParanagua;
       else if (porto === "Vitoria") imposto = impostoVitoria;
       else if (porto === "Recife") imposto = impostoRecife;
 
-      // valores da simulação
       var impostoTotal = valor * imposto;
       var frete = 10000;
       var total = valor + impostoTotal + frete;
       var totalReais = total * 5;
 
-      // resultado da simulação
       resultadoSimulacao.innerHTML =
       "<p><strong>Carro:</strong> " + carro + "</p>" +
       "<p><strong>Valor de Mercado:</strong> $" + valor.toFixed(2) + "</p>" +
