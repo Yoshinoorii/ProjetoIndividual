@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="./css/dashboard.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+
+  <script>
+  var usuarioLogado = sessionStorage.getItem('ID_USUARIO');
+    if (!usuarioLogado) {
+    window.location.href = 'login.html';
+    }
+</script>
+
+
 </head>
 <body>
 
@@ -17,12 +26,12 @@
       <a href="index.html">Home</a>
       <a href="quiz.html">Quiz</a>
       <a href="simulador.html">Importar</a>
-      <a href="index.html">Sair</a>
+      <a href="index.html" id="btnSair">Sair</a>
     </nav>
   </aside>
 
   <main class="main-content">
-    <h1 class="dashboard-title">Painel de Resultados</h1>
+    <h1 class="dashboard-title">Painel de Resultados de <span id="name_user"></span></h1>
 
     <section class="kpis">
       <div class="kpi-card" id="kpi-participantes-box">
@@ -30,8 +39,8 @@
         <p id="kpiparticipantes"></p>
       </div>
       <div class="kpi-card" id="kpi-tesouro-box">
-        <h3>Tesouro Escondido</h3>
-        <p id="kpi-tesouro"></p>
+        <h3>Carro Menos Tirado</h3>
+        <p id="kpimenostirado"></p>
       </div>
       <div class="kpi-card" id="kpi-carro-maistirado-box">
         <h3>Carro Mais Tirado</h3>
@@ -98,52 +107,116 @@ function mostrarCarroMaisTirado() {
         });
 }
 
-window.onload = function() {
-    inserirTentativa();
-    mostrarCarroMaisTirado();
+
+
+function mostrarCarroMenosTirado() {
+    const kpimenostirado = document.getElementById('kpimenostirado');
+
+    fetch("/dash/carroMenosTirado")
+        .then(res => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Erro na resposta da API");
+            }
+        })
+        .then(json => {
+            kpimenostirado.innerHTML = `${json.nomecarro} <br> (${json.quantidade}x)`;
+        })
+        .catch(erro => {
+            console.log("Erro no fetch carro: ", erro);
+            kpimenostirado.innerHTML = "Erro ao carregar dados";
+        });
 }
 
-  const ctx = document.getElementById('chart-resultado').getContext('2d');
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Supra MKIV', 'RX7', 'Silvia S14', 'Skyline R33', 'Lancer IX'],
-      datasets: [{
-        label: 'Quantidade de vezes tirado',
-        data: [12, 5, 7, 9, 3], // Exemplo de dados
-        backgroundColor: '#ff3333',
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { display: false },
-        title: {
-          display: true,
-          text: 'Distribuição dos Resultados'
+function mostrarCarroAtual() {
+    const kpiresultado = document.getElementById('kpi-resultado');
+
+    fetch("/dash/carroAtual")
+         .then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+              console.log(json)
+              kpiresultado.innerHTML = json.Carro || "Nenhum resultado para este usuário";
+            });
+        } else {
+            console.log("Erro na resposta da API.");
         }
+    })
+    .catch(function (erro) {
+        console.log("Erro no fetch: ", erro);
+    });
+}
+
+    function desenharGrafico(dadosApi) {
+    const labels = dadosApi.map(item => item.nomecarro);
+    const quantidades = dadosApi.map(item => item.quantidade);
+
+    const ctx = document.getElementById('chart-resultado').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Quantidade de vezes tirado',
+          data: quantidades,
+          backgroundColor: '#ff3333'
+        }]
       },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: {
-            color: 'white'
-          },
-          grid: {
-            color: '#444'
-          }
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Resultados do Quiz por Carro' }
         },
-        x: {
-          ticks: {
-            color: 'white'
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { color: 'white' },
+            grid: { color: '#444' }
           },
-          grid: {
-            color: '#444'
+          x: {
+            ticks: { color: 'white' },
+            grid: { color: '#444' }
           }
         }
       }
-    }
-  });
+    });
+  }
+
+  function carregarGrafico() {
+    fetch("/dash/grafico")
+      .then(res => {
+        if (!res.ok) throw new Error("Erro ao carregar dados do gráfico");
+        return res.json();
+      })
+      .then(dados => {
+        console.log("Dados do gráfico:", dados);
+        desenharGrafico(dados);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
+  // Ao carregar a página, executa tudo
+  window.onload = function() {
+    inserirTentativa();
+    mostrarCarroMaisTirado();
+    mostrarCarroMenosTirado();
+    mostrarCarroAtual();
+    carregarGrafico();
+  }
+
+    var nameUser = sessionStorage.NOME_USUARIO;
+    name_user.innerHTML = nameUser
+
+    var sair = document.getElementById('btnSair');
+
+    sair.addEventListener('click', function(){
+      sessionStorage.clear();
+    })
 </script>
 

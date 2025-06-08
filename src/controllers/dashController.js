@@ -22,7 +22,44 @@ function carroMaisTirado(req, res) {
     });
 }
 
+function carroMenosTirado(req, res) {
+    dashModel.carroMenosTirado()
+    .then(function(resultado){
+        if (resultado.length > 0) {
+            res.status(200).json(resultado[0]);
+        } else {
+            res.status(200).json({ nomecarro: "Nenhum resultado encontrado", total: 0 });
+        }
+    })
+    .catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function carroAtual(req, res) {
+    dashModel.carroAtual()
+    .then(function(resultado){
+        if (resultado.length > 0) {
+            res.status(200).json(resultado[0]);
+        } else {
+            res.status(200).json({ nomecarro: "Nenhum resultado encontrado", total: 0 });
+        }
+    })
+    .catch(function(erro){
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
+function grafico(req, res) {
+    dashModel.grafico()
+        .then(resultado => res.status(200).json(resultado))
+        .catch(erro => res.status(500).json(erro.sqlMessage));
+}
+
 module.exports = {
     qtdQuiz,
-    carroMaisTirado
+    carroMaisTirado,
+    carroMenosTirado,
+    carroAtual,
+    grafico,
 }
