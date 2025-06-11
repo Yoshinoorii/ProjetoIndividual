@@ -37,7 +37,13 @@ function carroMenosTirado(req, res) {
 }
 
 function carroAtual(req, res) {
-    dashModel.carroAtual()
+    const userId = req.query.userId;
+
+    if (!userId) {
+        return res.status(400).json({ error: "Usuário não informado" });
+    }
+
+    dashModel.carroAtual(userId)
     .then(function(resultado){
         if (resultado.length > 0) {
             res.status(200).json(resultado[0]);
@@ -49,6 +55,7 @@ function carroAtual(req, res) {
         res.status(500).json(erro.sqlMessage);
     });
 }
+
 
 function grafico(req, res) {
     dashModel.grafico()

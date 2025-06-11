@@ -59,7 +59,6 @@ body {
   animation: fadeInTitle 1.0s ease-out;
 }
 
-/* CARROSSEL */
 .carrossel-container {
   max-width: 1200px;
   margin: 0 auto 80px;
@@ -86,7 +85,8 @@ body {
 }
 
 .carro-card {
-  min-width: 300px;
+  min-width: 370px;
+  min-height: 500px;
   background-color: #1a1a1a;
   border-radius: 15px;
   box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);
@@ -102,12 +102,12 @@ body {
 .carro-card img:hover {
   transform: scale(1.05);
   -webkit-filter:grayscale(0%);
-    transition: 1.8s;
+    transition: 1.5s;
 }
 
 .carro-card img {
   width: 100%;
-  height: 200px;
+  height: 270px;
   object-fit: cover;
   -webkit-filter:grayscale(100%);
 }

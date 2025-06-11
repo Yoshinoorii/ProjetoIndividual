@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard JDM</title>
+  <title>JDMダッシュボード</title>
   <link rel="stylesheet" href="./css/dashboard.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
     }
 </script>
 
-
 </head>
 <body>
 
@@ -23,34 +22,34 @@
   <aside class="sidebar">
          <div class="logo-container">
       <a href="dashboardjp.html">
-        <img src="https://flagcdn.com/w40/jp.png" alt="Japão">
+        <img src="https://flagcdn.com/w40/jp.png" alt="日本">
       </a>
       <a href="dashboard.html">
-      <img src="https://flagcdn.com/w40/br.png" alt="Brasil">
+      <img src="https://flagcdn.com/w40/br.png" alt="ブラジル">
       </a>
     <div class="logo-sidebar">JDM</div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="quiz.html">Quiz</a>
-      <a href="simulador.html">Importar</a>
-      <a href="index.html" id="btnSair">Sair</a>
+      <a href="index.html">ホーム</a>
+      <a href="quiz.html">クイズ</a>
+      <a href="simulador.html">インポート</a>
+      <a href="index.html" id="btnSair">ログアウト</a>
     </nav>
   </aside>
 
   <main class="main-content">
-    <h1 class="dashboard-title">Painel de Resultados de <span id="name_user"></span></h1>
+    <h1 class="dashboard-title">結果パネル <span id="name_user"></span> さんの</h1>
 
     <section class="kpis">
       <div class="kpi-card" id="kpi-participantes-box">
-        <h3>Total de Participantes</h3>
+        <h3>参加者合計</h3>
         <p id="kpiparticipantes"></p>
       </div>
       <div class="kpi-card" id="kpi-tesouro-box">
-        <h3>Carro Menos Tirado</h3>
+        <h3>最も選ばれなかった車</h3>
         <p id="kpimenostirado"></p>
       </div>
       <div class="kpi-card" id="kpi-carro-maistirado-box">
-        <h3>Carro Mais Tirado</h3>
+        <h3>最も選ばれた車</h3>
         <p id="kpiCarroMaisTirado"></p>
       </div>
     </section>
@@ -60,12 +59,10 @@
         <canvas id="chart-resultado"></canvas>
       </div>
       <div class="kpi-card kpi-resultado-box" id="kpi-resultado-box">
-      <h3>Seu Resultado</h3>
+      <h3>あなたの結果</h3>
       <p id="kpi-resultado"></p>
     </div>
     </section>
-
-    
 
   </main>
 </div>
@@ -93,7 +90,6 @@ function inserirTentativa() {
     });
 }
 
-
 function mostrarCarroMaisTirado() {
     const kpiCarroMaisTirado = document.getElementById('kpiCarroMaisTirado');
 
@@ -113,8 +109,6 @@ function mostrarCarroMaisTirado() {
             kpiCarroMaisTirado.innerHTML = "Erro ao carregar dados";
         });
 }
-
-
 
 function mostrarCarroMenosTirado() {
     const kpimenostirado = document.getElementById('kpimenostirado');
@@ -156,7 +150,7 @@ function mostrarCarroAtual() {
     });
 }
 
-    function desenharGrafico(dadosApi) {
+function desenharGrafico(dadosApi) {
     const labels = dadosApi.map(item => item.nomecarro);
     const quantidades = dadosApi.map(item => item.quantidade);
 
@@ -193,7 +187,7 @@ function mostrarCarroAtual() {
     });
   }
 
-  function carregarGrafico() {
+function carregarGrafico() {
     fetch("/dash/grafico")
       .then(res => {
         if (!res.ok) throw new Error("Erro ao carregar dados do gráfico");
@@ -206,24 +200,23 @@ function mostrarCarroAtual() {
       .catch(err => {
         console.error(err);
       });
-  }
+}
 
-  // Ao carregar a página, executa tudo
-  window.onload = function() {
+window.onload = function() {
     inserirTentativa();
     mostrarCarroMaisTirado();
     mostrarCarroMenosTirado();
     mostrarCarroAtual();
     carregarGrafico();
-  }
+}
 
-    var nameUser = sessionStorage.NOME_USUARIO;
-    name_user.innerHTML = nameUser
+var nameUser = sessionStorage.NOME_USUARIO;
+name_user.innerHTML = nameUser
 
-    var sair = document.getElementById('btnSair');
+var sair = document.getElementById('btnSair');
 
-    sair.addEventListener('click', function(){
-      sessionStorage.clear();
-    })
+sair.addEventListener('click', function(){
+  sessionStorage.clear();
+})
+
 </script>
-

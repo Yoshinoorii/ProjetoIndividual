@@ -18,8 +18,8 @@
 <body>
   <header class="topbar">
     <div class="logo-container">
-      <img src="https://flagcdn.com/w40/jp.png" alt="Japão" />
-      <img src="https://flagcdn.com/w40/br.png" alt="Brasil" />
+      <a href="quizjp.html"><img src="https://flagcdn.com/w40/jp.png" alt="日本" /></a>
+      <a href="quiz.html"><img src="https://flagcdn.com/w40/br.png" alt="Português" /></a>
       <div class="logo">JDM</div>
     </div>
     <nav class="nav-links">
@@ -103,9 +103,9 @@
       {
         texto: "Se você pudesse:",
         opcoes: [
-          { texto: "Iria com uma corrida com meu carro", carro: "Nissan Skyline R33" },
+          { texto: "Iria para uma corrida com meu carro", carro: "Nissan Skyline R33" },
           { texto: "Iria para um evento de Drift", carro: "Nissan Silvia S14"},
-          { texto: "Acelerava numa exposição de JDM", carro: "Toyota Supra MKIV" },
+          { texto: "Estaria numa exposição de JDM", carro: "Toyota Supra MKIV" },
           { texto: "Estaria num rolê a noite! ", carro: "Mazda RX7" },
           { texto: "Participaria de uma corrida de rally ", carro: "Mitsubishi Lancer IX" }
         ]
@@ -262,6 +262,15 @@
         
 
     }
+
+     var nameUser = sessionStorage.NOME_USUARIO;
+    name_user.innerHTML = nameUser
+
+    var sair = document.getElementById('btnSair');
+
+    sair.addEventListener('click', function(){
+      sessionStorage.clear();
+    })
 
 
   </script>

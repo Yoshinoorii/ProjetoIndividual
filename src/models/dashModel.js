@@ -34,17 +34,19 @@ function carroMenosTirado() {
     return database.executar(instrucaoSql);
 }
 
-function carroAtual() {
+function carroAtual(userId) {
     var instrucaoSql = `
-        SELECT fkUsuario, carro.nomecarro AS Carro,
-        dataRegistro FROM resultado_quiz
+        SELECT fkUsuario, carro.nomecarro AS Carro, dataRegistro
+        FROM resultado_quiz
         JOIN carro ON resultado_quiz.fkcarro = carro.id_carro
-        ORDER BY dataRegistro
-        DESC LIMIT 1;;
+        WHERE fkUsuario = ${userId}
+        ORDER BY dataRegistro DESC
+        LIMIT 1;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
 
 function grafico() {
     const instrucaoSql = `

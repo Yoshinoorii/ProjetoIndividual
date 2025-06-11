@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JDMクイズ</title>
+  <link rel="stylesheet" href="./css/estiloQuiz.css" />
+
+  <script>
+    var usuarioLogado = sessionStorage.getItem('ID_USUARIO');
+    if (!usuarioLogado) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="logo-container">
+      <a href="quizjp.html"><img src="https://flagcdn.com/w40/jp.png" alt="日本" /></a>
+      <a href="quiz.html"><img src="https://flagcdn.com/w40/br.png" alt="ブラジル" /></a>
+      <div class="logo">JDM</div>
+    </div>
+    <nav class="nav-links">
+      <a href="indexjp.html">ホーム</a>
+      <a href="carros.html">車両</a>
+      <a href="simulador.html">輸入</a>
+      <a href="dashboard.html">ダッシュボード</a>
+      <a href="login.html">ログアウト</a>
+    </nav>
+  </header>
+  
+  <main class="login-container">
+    <section class="login-box">
+      <h2>あなたにぴったりのJDMは？</h2>
+
+      <div id="quiz-pergunta" class="quiz-questao"></div>
+      <div id="quiz-respostas"></div>
+      <div id="quiz-resultado" style="margin-top: 20px;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Erick Yoshinori - 全著作権所有</p>
+  </footer>
+
+  <script>
+    const perguntas = [
+      {
+        texto: "好きなメーカーは？",
+        opcoes: [
+          { texto: "トヨタ", carro: "Toyota Supra MKIV" },
+          { texto: "日産", carro: ["Nissan Skyline R33", "Nissan Silvia S14"]},
+          { texto: "マツダ", carro: "Mazda RX7" },
+          { texto: "三菱", carro: "Mitsubishi Lancer IX" }
+        ]
+      },
+      {
+        texto: "好きな色は？",
+        opcoes: [
+          { texto: "赤", carro: "Mazda RX7" },
+          { texto: "白", carro: "Toyota Supra MKIV" },
+          { texto: "黒", carro: "Nissan Silvia S14" },
+          { texto: "青", carro: "Nissan Skyline R33" },
+          { texto: "黄色", carro: "Mitsubishi Lancer IX" }
+        ]
+      },
+      {
+        texto: "あなたのスタイルは？",
+        opcoes: [
+          { texto: "ドリフト", carro: "Nissan Silvia S14" },
+          { texto: "スピード", carro: "Nissan Skyline R33" },
+          { texto: "スタイル", carro: "Toyota Supra MKIV" },
+          { texto: "ラリー", carro: "Mitsubishi Lancer IX" },
+          { texto: "チューニング", carro: "Mazda RX7" }
+        ]
+      },
+      {
+        texto: "どちらが好き？",
+        opcoes: [
+          { texto: "家で寝る", carro: "Mazda RX7" },
+          { texto: "注目されるのが好き", carro: "Toyota Supra MKIV" },
+          { texto: "新しいことに挑戦", carro: "Nissan Silvia S14" },
+          { texto: "アドレナリン全開！", carro: "Nissan Skyline R33" },
+          { texto: "旅や冒険が好き", carro: "Mitsubishi Lancer IX" }
+        ]
+      },
+      {
+        texto: "カーイベントで選ぶのは？",
+        opcoes: [
+          { texto: "最も速くてうるさい車", carro: "Nissan Skyline R33" },
+          { texto: "みんなの注目を集める個性的な車", carro: "Mazda RX7" },
+          { texto: "オフロードも走れる万能車", carro: "Mitsubishi Lancer IX" },
+          { texto: "美しくてクラシックな車", carro: "Toyota Supra MKIV" },
+          { texto: "カスタム可能でドリフト向きな車", carro: "Nissan Silvia S14" }
+        ]
+      },
+      {
+        texto: "もしできるなら？",
+        opcoes: [
+          { texto: "レースに出場", carro: "Nissan Skyline R33" },
+          { texto: "ドリフトイベントに参加", carro: "Nissan Silvia S14"},
+          { texto: "JDM展示会に参加", carro: "Toyota Supra MKIV" },
+          { texto: "夜の街をドライブ！", carro: "Mazda RX7" },
+          { texto: "ラリーに挑戦！", carro: "Mitsubishi Lancer IX" }
+        ]
+      },
+    ];
+
+    const imagensCarros = {
+      "Toyota Supra MKIV": "fotos/supraQUIZ.jpg",
+      "Nissan Skyline R33": "https://hips.hearstapps.com/roadandtrack/assets/16/35/1472823378-r33drift.gif",
+      "Nissan Silvia S14": "fotos/silvia14.png",
+      "Mitsubishi Lancer IX": "fotos/lancerIX.jpg",
+      "Mazda RX7": "fotos/mazda.jpg"
+    };
+
+    let contagem = {};
+    let perguntaAtual = 0;
+
+    function mostrarProximaPergunta() {
+      const divPergunta = document.getElementById("quiz-pergunta");
+      const divRespostas = document.getElementById("quiz-respostas");
+      const resultado = document.getElementById("quiz-resultado");
+
+      divPergunta.innerHTML = "";
+      divRespostas.innerHTML = "";
+      resultado.innerHTML = "";
+
+      if (perguntaAtual < perguntas.length) {
+        const pergunta = perguntas[perguntaAtual];
+        divPergunta.innerText = pergunta.texto;
+
+        pergunta.opcoes.forEach(opcao => {
+          const botao = document.createElement("button");
+          botao.className = "botao-resposta";
+          botao.innerText = opcao.texto;
+          botao.onclick = function () {
+            const carro = opcao.carro;
+            contagem[carro] = (contagem[carro] || 0) + 1;
+            perguntaAtual++;
+            mostrarProximaPergunta();
+          };
+          divRespostas.appendChild(botao);
+        });
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function mostrarResultado() {
+      const resultado = document.getElementById("quiz-resultado");
+      let maisEscolhido = "";
+      let maiorPontos = 0;
+
+      for (let carro in contagem) {
+        if (contagem[carro] > maiorPontos) {
+          maiorPontos = contagem[carro];
+          maisEscolhido = carro;
+        }
+      }
+
+      const mensagens = {
+        "Toyota Supra MKIV": "あなたは好奇心旺盛で冒険好きなタイプ！スープラはスピード・スタイル・ドリフトを兼ね備えた完璧なJDMです！",
+        "Nissan Skyline R33": "アドレナリン好きなあなたにはスカイラインR33がぴったり！その走りは誰もが注目します！",
+        "Nissan Silvia S14": "オシャレで注目されたいあなたにはシルビアS14！美しい見た目とドリフト性能の完璧なバランス！",
+        "Mitsubishi Lancer IX": "探検好きでどこでも馴染めるあなたにはランサーIX！オフロードでも街中でも目立ちます！",
+        "Mazda RX7": "個性的で目立つのが好きなあなたにはRX7！ロータリーエンジンと流れるようなスタイルが魅力！"
+      };
+
+      resultado.innerHTML = `
+        <h3>あなたにぴったりのJDMは:</h3>
+        <p><strong>${maisEscolhido}</strong></p>
+        <img src="${imagensCarros[maisEscolhido]}" alt="${maisEscolhido}" style="max-width:100%; border-radius: 10px; margin-top: 15px;" />
+        <br><br><h2>${mensagens[maisEscolhido]}</h2>
+        <a href="dashboard.html" class="botao-dashboard">ダッシュボードへ</a>
+      `;
+
+      const carrosJDM = {
+        "Toyota Supra MKIV": 1,
+        "Nissan Silvia S14": 2,
+        "Nissan Skyline R33": 3,
+        "Mitsubishi Lancer IX": 4,
+        "Mazda RX7": 5
+      };
+
+      quizBD(carrosJDM[maisEscolhido]);
+    }
+
+    function quizBD(idCarro) {
+      var id = sessionStorage.getItem("ID_USUARIO")
+      fetch("/quiz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          idServer: id,
+          quizServer: idCarro
+        }),
+      })
+      .then(resposta => {
+        if (!resposta.ok) throw "エラーが発生しました！";
+        console.log("クイズ結果がデータベースに保存されました");
+      })
+      .catch(err => console.log(`#エラー: ${err}`));
+    }
+
+    mostrarProximaPergunta();
+  </script>
+</body>
+</html>

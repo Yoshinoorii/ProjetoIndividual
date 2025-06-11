@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JDM CULT</title>
+  <link rel="stylesheet" href="./css/estiloConteudo.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <script>
+  var usuarioLogado = sessionStorage.getItem('ID_USUARIO');
+    if (!usuarioLogado) {
+    window.location.href = 'login.html';
+    }
+</script>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="logo-container">
+      <a href="conteudojp.html">
+        <img src="https://flagcdn.com/w40/jp.png" alt="日本">
+      </a>
+      <a href="conteudo.html">
+        <img src="https://flagcdn.com/w40/br.png" alt="ブラジル">
+      </a>
+      <div class="logo">JDM</div>
+    </div>
+    <nav class="nav-links">
+      <a href="quiz.html">クイズ</a>
+      <a href="dashboard.html">ダッシュボード</a>
+      <a href="index.html" id="sair">ログアウト</a>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <h1>ようこそ <span id="name_user"></span> さん</h1>
+  </section>
+
+  <main class="content">
+    <section id="oque-e-jdm" class="section bloco bloco-left">
+      <div class="text-block">
+        <h2>あなたのJDMはどれ？</h2>
+        <p>あなたの個性やライフスタイルにぴったりのJDMカーは？今こそ発見の時！日本のカーカルチャーに飛び込み、いくつかの質問に答えるだけで理想のモデルが見つかるかもしれません。90年代の名車か、それともサーキット仕様のモンスターか？</p>
+      </div>
+      <div class="image-gallery">
+        <img src="./fotos/quiz.png" alt="スープラ">
+      </div>
+    </section>
+
+    <section class="section drift-block">
+      <div class="drift-text">
+        <h2>始めましょう！</h2>
+        <p>下のボタンをクリックして、質問に正直に答えてください。あなたの夢のガレージにぴったりのJDMアイコンを見つけましょう！</p>
+        <a href="quiz.html">クイズ開始</a>
+      </div>
+      <div class="drift-gif">
+        <img src="./fotos/FotoQuiz.png" alt="クイズ画像">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 エリック・ヨシノリ - 無断転載を禁じます。</p>
+  </footer>  
+</body>
+
+</html>
+
+<script>
+  var nameUser = sessionStorage.NOME_USUARIO;
+  name_user.innerHTML = nameUser
+
+  var sair = document.getElementById('sair');
+  sair.addEventListener('click', function(){
+    sessionStorage.clear();
+  })
+</script>
